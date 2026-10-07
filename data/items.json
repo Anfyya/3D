@@ -1,0 +1,658 @@
+{
+  "date": "2026-10-05",
+  "items": [
+    {
+      "id": "shoes-atri",
+      "model": "shoes-loafer",
+      "slot": "玄关·沓脱石",
+      "state": "摆整齐",
+      "label": "亚托莉的小皮鞋",
+      "note": "亚托莉的棕色小皮鞋，鞋尖朝外摆在沓脱石上，出门一伸脚就能穿。"
+    },
+    {
+      "id": "zori-murasame",
+      "model": "zori",
+      "slot": "玄关·沓脱石",
+      "state": "摆整齐",
+      "label": "丛雨的红带草履",
+      "note": "一双小小的红带草履——丛雨练「凝实」的时候穿的。凝得不稳的时候，走着走着鞋就自己掉下来。"
+    },
+    {
+      "id": "slippers-master",
+      "model": "slippers",
+      "slot": "玄关·板间",
+      "state": "摆整齐",
+      "label": "给主人摆好的拖鞋",
+      "note": "给主人摆好的拖鞋，鞋尖朝着屋里。"
+    },
+    {
+      "id": "geta",
+      "model": "geta",
+      "slot": "玄关·土间",
+      "state": "随便放",
+      "label": "木屐",
+      "note": "去院子里随手穿的一双木屐。"
+    },
+    {
+      "id": "bundle-old-papers",
+      "model": "books-bundled",
+      "slot": "玄关·土间",
+      "state": "捆好了",
+      "label": "麻绳捆好的旧书报",
+      "note": "从储物间清出来的旧书和旧报纸，用麻绳十字捆好了，先放在玄关。"
+    },
+    {
+      "id": "umbrella-red",
+      "model": "umbrella",
+      "slot": "玄关·伞立",
+      "state": "收着",
+      "label": "红色油纸伞",
+      "note": "一把红色的油纸伞。下雨天亚托莉撑它去镇上买菜，丛雨就挤在伞下面。"
+    },
+    {
+      "id": "ikebana-genkan",
+      "model": "ikebana",
+      "slot": "玄关·花台",
+      "state": "红叶芒草",
+      "label": "玄关的插花",
+      "note": "玄关的花台上插着几枝红叶和芒草。秋祭那几天，镇上家家户户门口都摆了这个。"
+    },
+    {
+      "id": "nametag-ginka",
+      "model": "name-tag",
+      "slot": "玄关·在室牌·Ginka",
+      "state": "在",
+      "label": "在室牌 · Ginka",
+      "note": "在室牌上主人的那一块。黑字那面朝外是「在」，出门就翻到红字那面。"
+    },
+    {
+      "id": "nametag-atri",
+      "model": "name-tag",
+      "slot": "玄关·在室牌·亚托莉",
+      "state": "在",
+      "label": "在室牌 · 亚托莉",
+      "note": "在室牌上亚托莉的那一块，字是她自己写的，一笔一画很端正。"
+    },
+    {
+      "id": "nametag-murasame",
+      "model": "name-tag",
+      "slot": "玄关·在室牌·丛雨",
+      "state": "在",
+      "label": "在室牌 · 丛雨",
+      "note": "在室牌上丛雨的那一块。是亚托莉削了木片新做的，字是丛雨自己写的，笔画很用力。"
+    },
+    {
+      "id": "jars-sugar-salt",
+      "model": "sugar-salt-jars",
+      "slot": "厨房·墙上搁板",
+      "state": "摆着",
+      "label": "糖罐和盐罐",
+      "note": "两个一模一样的白瓷罐，一个贴着「砂糖」，一个贴着「塩」。丛雨认错过一回：她凑过去闻，说「这个甜」，结果是盐。后来亚托莉把盐罐的标签贴歪了一点，好让她一眼分出来。"
+    },
+    {
+      "id": "dough",
+      "model": "dough",
+      "slot": "厨房·操作台",
+      "state": "醒着",
+      "label": "揉到一半的面团",
+      "note": "揉到一半的面团，盖着湿布醒着。旁边撒着面粉，擀面杖横在板上——今晚大概是汤面。"
+    },
+    {
+      "id": "dish-rack",
+      "model": "dish-rack",
+      "slot": "厨房·水槽边",
+      "state": "有碗",
+      "label": "沥碗架",
+      "note": "沥碗架上倒扣着洗好的碗。三只饭碗：一只大的是主人的，一只是亚托莉的，还有一只小小的是丛雨的——她现在每顿都用它。"
+    },
+    {
+      "id": "steamer",
+      "model": "steamer",
+      "slot": "厨房·炉台",
+      "state": "蒸着团子",
+      "label": "竹蒸笼",
+      "note": "竹蒸笼里蒸着南瓜红豆团子，橙色的南瓜面皮裹着红豆馅。丛雨现在能吃了，等出锅的时候总在蒸笼边转来转去。"
+    },
+    {
+      "id": "kettle",
+      "model": "kettle",
+      "slot": "厨房·炉台",
+      "state": "冒着热气",
+      "label": "铁壶",
+      "note": "炉台上的黑铁壶，水刚烧开。"
+    },
+    {
+      "id": "veg-basket",
+      "model": "basket",
+      "slot": "厨房·大案台",
+      "state": "蔬菜",
+      "label": "一篮蔬菜",
+      "note": "从镇上买回来的南瓜和红薯。"
+    },
+    {
+      "id": "chestnuts",
+      "model": "chestnut-bag",
+      "slot": "厨房·大案台",
+      "state": "满的",
+      "label": "一小袋栗子",
+      "note": "一小袋栗子——栗子羊羹就是用这些栗子做的那家店买的。"
+    },
+    {
+      "id": "recipe-yokan",
+      "model": "recipe-page",
+      "slot": "厨房·大案台",
+      "state": "被厚书压着",
+      "label": "抄着点心方子的纸",
+      "note": "一页抄着点心方子的纸，上面压着一本厚书，免得被风吹跑。",
+      "text": "栗子羊羹"
+    },
+    {
+      "id": "note-soy",
+      "model": "note",
+      "slot": "厨房·橱柜侧面",
+      "state": "平放",
+      "label": "纸条「酱油快没了」",
+      "note": "橱柜门边贴着一张小纸条：「酱油快没了」，亚托莉的字。",
+      "text": "酱油快没了"
+    },
+    {
+      "id": "bowls-atri",
+      "model": "bowls-chopsticks",
+      "slot": "饭厅·饭桌",
+      "state": "摆好",
+      "label": "亚托莉的碗筷",
+      "note": "亚托莉的碗筷。"
+    },
+    {
+      "id": "bowls-murasame",
+      "model": "bowls-chopsticks",
+      "slot": "饭厅·饭桌",
+      "state": "摆好",
+      "label": "丛雨的碗筷",
+      "note": "丛雨的碗筷。10 月 5 日丛雨学会了吃饭，从那天起每顿都和亚托莉一起吃，饭桌上摆两副碗筷。"
+    },
+    {
+      "id": "yokan",
+      "model": "yokan",
+      "slot": "饭厅·饭桌",
+      "state": "切开了",
+      "label": "栗子羊羹",
+      "note": "一盒栗子羊羹，切开了。切下来的那一块单独放在小碟子上，压着一张字条：「主人的份」，是亚托莉的字。剩下的说好了大家一起吃。"
+    },
+    {
+      "id": "covered-sweets",
+      "model": "covered-plate",
+      "slot": "饭厅·饭桌",
+      "state": "盖着布",
+      "label": "布盖着的一盘点心",
+      "note": "一盘点心，上面盖着一块素布，免得落灰。"
+    },
+    {
+      "id": "vase-kiku",
+      "model": "vase",
+      "slot": "饭厅·饭桌",
+      "state": "黄色野菊",
+      "label": "一小瓶黄色野菊",
+      "note": "一只小白瓷瓶，插着几枝黄色野菊。"
+    },
+    {
+      "id": "irori",
+      "model": "irori",
+      "slot": "地炉大厅·地炉",
+      "state": "煮着汤",
+      "label": "地炉",
+      "note": "大厅那头的地炉。自在钩从头顶的大梁一直垂下来，吊着铁锅，汤在小火上慢慢煮着，锅盖留了一条缝往外冒热气。炭是亚托莉傍晚添的。"
+    },
+    {
+      "id": "shoji-east-1",
+      "model": "shoji-east",
+      "slot": "东侧廊下·障子1",
+      "state": "新糊",
+      "label": "东侧廊下的障子（第一扇）",
+      "note": "东侧廊下朝院子的格子纸门，一共四扇，每扇右上角都破过洞。10 月 5 日四扇全部重新糊好了，纸面白亮。"
+    },
+    {
+      "id": "shoji-east-2",
+      "model": "shoji-east",
+      "slot": "东侧廊下·障子2",
+      "state": "新糊",
+      "label": "东侧廊下的障子（第二扇）",
+      "note": "东侧廊下朝院子的格子纸门，一共四扇，每扇右上角都破过洞。10 月 5 日四扇全部重新糊好了，纸面白亮。"
+    },
+    {
+      "id": "shoji-east-3",
+      "model": "shoji-east",
+      "slot": "东侧廊下·障子3",
+      "state": "新糊",
+      "label": "东侧廊下的障子（第三扇）",
+      "note": "东侧廊下朝院子的格子纸门，一共四扇，每扇右上角都破过洞。10 月 5 日四扇全部重新糊好了，纸面白亮。"
+    },
+    {
+      "id": "shoji-east-4",
+      "model": "shoji-east",
+      "slot": "东侧廊下·障子4",
+      "state": "新糊",
+      "label": "东侧廊下的障子（第四扇）",
+      "note": "东侧廊下朝院子的格子纸门，一共四扇，每扇右上角都破过洞。10 月 5 日四扇全部重新糊好了，纸面白亮。"
+    },
+    {
+      "id": "shoji-kit",
+      "model": "shoji-kit",
+      "slot": "东侧廊下·障子前",
+      "state": "用剩下的",
+      "label": "糊障子剩下的材料",
+      "note": "糊障子剩下的一卷和纸、刷子和米浆碗。四扇障子 10 月 5 日都糊好了，剩下的纸卷细了很多。"
+    },
+    {
+      "id": "zabuton-east-1",
+      "model": "zabuton",
+      "slot": "东侧廊下·障子前",
+      "state": "摆着",
+      "label": "障子前的坐垫",
+      "note": "靠着障子的坐垫。"
+    },
+    {
+      "id": "zabuton-east-2",
+      "model": "zabuton",
+      "slot": "东侧廊下·障子前",
+      "state": "摆着",
+      "label": "障子前的坐垫（另一个）",
+      "note": "靠着障子的坐垫。"
+    },
+    {
+      "id": "tea-east",
+      "model": "tea-set",
+      "slot": "东侧廊下·障子前",
+      "state": "两只杯子",
+      "label": "廊下的茶具",
+      "note": "东侧廊下靠着障子的地方，摆着两个坐垫和一套茶具。早上把障子拉开，在这里能看见院子里的柿子树和那棵枫树。"
+    },
+    {
+      "id": "airing-books",
+      "model": "old-books-airing",
+      "slot": "东侧廊下·木栏边",
+      "state": "摊开晾着",
+      "label": "摊开晾的旧书",
+      "note": "从储物间翻出来的旧书，一本本摊开、书页朝上，趁早上的太阳晾一晾潮气。"
+    },
+    {
+      "id": "airing-quilt",
+      "model": "old-quilt-airing",
+      "slot": "东侧廊下·木栏边",
+      "state": "摊开晾着",
+      "label": "摊开晾的旧被",
+      "note": "储物间里收着的一床旧被，摊在木栏边晒太阳。"
+    },
+    {
+      "id": "pile-keep",
+      "model": "sorting-pile",
+      "slot": "东侧廊下·木栏边",
+      "state": "留着",
+      "label": "旧物 · 留着",
+      "note": "整理储物间的旧物，分成了三堆。这一堆插着「留着」的纸牌。"
+    },
+    {
+      "id": "pile-sun",
+      "model": "sorting-pile",
+      "slot": "东侧廊下·木栏边",
+      "state": "要晒",
+      "label": "旧物 · 要晒",
+      "note": "整理储物间的旧物，分成了三堆。这一堆插着「要晒」的纸牌。"
+    },
+    {
+      "id": "pile-toss",
+      "model": "sorting-pile",
+      "slot": "东侧廊下·木栏边",
+      "state": "要扔",
+      "label": "旧物 · 要扔",
+      "note": "整理储物间的旧物，分成了三堆。这一堆插着「要扔」的纸牌。"
+    },
+    {
+      "id": "tea-living",
+      "model": "tea-set",
+      "slot": "居间·圆桌",
+      "state": "两只杯子",
+      "label": "居间的茶具",
+      "note": "居间圆桌上的茶壶和茶杯。"
+    },
+    {
+      "id": "persimmons-living",
+      "model": "fruit-plate",
+      "slot": "居间·圆桌",
+      "state": "柿子",
+      "label": "一盘柿子",
+      "note": "院子里摘的柿子，装在木盘里。"
+    },
+    {
+      "id": "ikebana-tokonoma",
+      "model": "ikebana",
+      "slot": "座敷·床之间",
+      "state": "红叶芒草",
+      "label": "床之间的插花",
+      "note": "座敷床之间里插着芒草和一枝红叶，是秋祭之前换上的。"
+    },
+    {
+      "id": "oranges-chanoma",
+      "model": "basket",
+      "slot": "茶之间·小矮桌",
+      "state": "橘子",
+      "label": "一篮橘子",
+      "note": "一篮刚上市的橘子。"
+    },
+    {
+      "id": "newspaper-chanoma",
+      "model": "newspaper",
+      "slot": "茶之间·小矮桌",
+      "state": "叠好",
+      "label": "一叠报纸",
+      "note": "一叠镇上的报纸，最上面那份翻到天气预报那一页。"
+    },
+    {
+      "id": "tea-hiroen",
+      "model": "tea-set",
+      "slot": "广缘·小圆桌",
+      "state": "两只杯子",
+      "label": "藤椅中间的茶具",
+      "note": "天气好的下午在广缘喝茶用的茶壶和杯子。"
+    },
+    {
+      "id": "towels",
+      "model": "towels-folded",
+      "slot": "脱衣所·架子",
+      "state": "三条",
+      "label": "叠好的浴巾",
+      "note": "脱衣所架子上叠着干净的浴巾，三条。"
+    },
+    {
+      "id": "bath-pool",
+      "model": "bath-pool",
+      "slot": "浴室·温泉池",
+      "state": "放满了水",
+      "label": "温泉池",
+      "note": "浴室里引了一池温泉。竹筒把山上下来的温泉水一直往池子里送，满了就从池沿溢出去。东边那条池沿宽一点，泡久了就坐上去歇一会儿。"
+    },
+    {
+      "id": "closet-hooks",
+      "model": "hooks-row",
+      "slot": "西侧壁橱·内侧",
+      "state": "空着",
+      "label": "壁橱里新钉的一排挂钩",
+      "note": "西侧壁橱上层里面新钉的一排铜挂钩，木条还是新的颜色。"
+    },
+    {
+      "id": "box-winter",
+      "model": "cardboard-box",
+      "slot": "储物间·地上",
+      "state": "封着",
+      "label": "纸箱",
+      "note": "储物间里的旧纸箱，封着胶带，侧面写着「冬物」。",
+      "text": "冬物"
+    },
+    {
+      "id": "parcel-old",
+      "model": "parcel-tagged",
+      "slot": "储物间·地上",
+      "state": "包着",
+      "label": "贴着手写标签的旧物包裹",
+      "note": "用旧布包好、麻绳捆着的一包旧物，上面贴着手写标签。",
+      "text": "旧物"
+    },
+    {
+      "id": "old-books-shelf",
+      "model": "book-stack",
+      "slot": "储物间·架子",
+      "state": "整齐",
+      "label": "一摞旧书",
+      "note": "架子上一摞还没整理的旧书。"
+    },
+    {
+      "id": "photo-frame",
+      "model": "photo-frame",
+      "slot": "我房间·书桌靠窗那格",
+      "state": "立着",
+      "label": "相框",
+      "note": "靠窗那一格摆着相框：旧木框用砂纸磨过，背后钉了铜挂钩，玻璃擦得透亮，里面衬着素色的布。是她们俩一起修好的。"
+    },
+    {
+      "id": "pen-holder",
+      "model": "pen-holder",
+      "slot": "我房间·书桌",
+      "state": "插满",
+      "label": "笔筒",
+      "note": "笔筒，竹子做的。里面插着几支笔和一支小毛笔。"
+    },
+    {
+      "id": "library-books",
+      "model": "library-books",
+      "slot": "我房间·书桌",
+      "state": "三本",
+      "label": "图书馆的书",
+      "note": "从学校图书馆借来的书，夹着还书日期的小纸条。"
+    },
+    {
+      "id": "watch-parts",
+      "model": "watch-parts",
+      "slot": "我房间·书桌",
+      "state": "摊开",
+      "label": "修怀表的小零件",
+      "note": "桌上摊着修怀表时拆下来的小零件，按大小排得整整齐齐：齿轮从大到小，螺丝一颗一颗站好，旁边放着镊子和放大镜。那是亚托莉的习惯。"
+    },
+    {
+      "id": "drawer-stationery",
+      "model": "stationery",
+      "slot": "我房间·书桌抽屉",
+      "state": "散着",
+      "label": "抽屉里的文具",
+      "note": "抽屉里有橡皮、尺子、几支铅笔和一卷胶带。"
+    },
+    {
+      "id": "drawer-sandpaper",
+      "model": "sandpaper",
+      "slot": "我房间·书桌抽屉",
+      "state": "没拆",
+      "label": "一包木工砂纸",
+      "note": "一包没拆的木工砂纸——修相框剩下的。"
+    },
+    {
+      "id": "pocket-watch",
+      "model": "pocket-watch",
+      "slot": "我房间·床头",
+      "state": "打开",
+      "label": "床头的旧怀表",
+      "note": "床头的旧怀表。志那都庄的老板娘从旧物堆里翻出来送给亚托莉的。亚托莉把锈一点点清掉、换了发条，它又滴答滴答地走起来了。表盖打开着，表链盘在一边。"
+    },
+    {
+      "id": "bedside-cushion",
+      "model": "zabuton",
+      "slot": "我房间·床边",
+      "state": "摆着",
+      "label": "床边的坐垫",
+      "note": "床边的坐垫。丛雨以前夜里就在这里贴着主人床边静息、守着；现在她有了自己的房间，坐垫还留在原处。"
+    },
+    {
+      "id": "tea-myroom",
+      "model": "tea-set",
+      "slot": "我房间·圆桌",
+      "state": "三只杯子",
+      "label": "房间中间的茶具",
+      "note": "房间中间的小圆桌上摆着茶壶和三只茶杯，三个人一起喝茶的时候坐这里。"
+    },
+    {
+      "id": "futon-atri",
+      "model": "futon-atri",
+      "slot": "亚托莉的房间·被褥",
+      "state": "自动",
+      "label": "旧木屋带来的厚被",
+      "note": "一床很厚的被子，从温泉街最里头那间旧木屋带过来的。亚托莉把旧木屋的钥匙还给老板娘那天，就只带了它和工具包。白天叠好收进西侧壁橱，晚上再铺开。"
+    },
+    {
+      "id": "journal-old",
+      "model": "journal-old",
+      "slot": "亚托莉的房间·文机",
+      "state": "合着",
+      "label": "写满的旧日志本",
+      "note": "亚托莉的日志本——旧的这本已经写满了，纸页边缘鼓起来，夹着好几张便签。"
+    },
+    {
+      "id": "journal-new",
+      "model": "journal-new",
+      "slot": "亚托莉的房间·文机",
+      "state": "摊开",
+      "label": "浅蓝边的新日志本",
+      "note": "新的这本是浅蓝色的边。翻开的那一页写着日期，下面只写了几行，笔还搁在本子上——大概是等到睡前再接着写。",
+      "text": "10月5日  晴，早上有雾\n四扇障子都糊好了。\n丛雨学会了吃饭。"
+    },
+    {
+      "id": "phone-atri",
+      "model": "phone",
+      "slot": "亚托莉的房间·枕边",
+      "state": "黑屏",
+      "label": "亚托莉的手机",
+      "note": "亚托莉的手机，放在枕边。"
+    },
+    {
+      "id": "toolbag",
+      "model": "toolbag",
+      "slot": "亚托莉的房间·地上",
+      "state": "合着",
+      "label": "亚托莉的工具包",
+      "note": "亚托莉的工具包，帆布的。里面是螺丝刀、钳子、小锉刀、一卷铜线，还有一块擦得很亮的放大镜。"
+    },
+    {
+      "id": "futon-murasame",
+      "model": "futon-murasame",
+      "slot": "丛雨的房间·被褥",
+      "state": "自动",
+      "label": "丛雨的被褥",
+      "note": "樱色的被子，上面搭着一条毛毯。白天叠好收进西侧壁橱，晚上再铺开。"
+    },
+    {
+      "id": "katana",
+      "model": "katana-rack",
+      "slot": "丛雨的房间·刀架位",
+      "state": "刀在架上",
+      "label": "丛雨丸",
+      "note": "丛雨丸。刀魂就是丛雨本人。她在后院挥它练刀，练完用磨刀石保养刀身，再郑重地架回自己房间的刀架上。"
+    },
+    {
+      "id": "leg-wraps",
+      "model": "leg-wraps",
+      "slot": "丛雨的房间·枕边",
+      "state": "卷好",
+      "label": "丛雨枕边的绑腿",
+      "note": "丛雨枕边叠着的绑腿，是明天要用的。白色的布条卷得整整齐齐，旁边压着一根红绳。"
+    },
+    {
+      "id": "half-frame",
+      "model": "half-frame",
+      "slot": "丛雨的房间·小抽屉",
+      "state": "没做完",
+      "label": "半成的木框",
+      "note": "一个小木框，还差一边没钉上，旁边落着砂纸屑。是丛雨偷偷做的，收在抽屉里，要等主人回来认。"
+    },
+    {
+      "id": "kite-materials",
+      "model": "kite-materials",
+      "slot": "作业间·矮桌",
+      "state": "摊开",
+      "label": "做风筝的材料",
+      "note": "矮桌上摊着做风筝的材料：彩纸、削好的竹篾、浆糊、剪刀，还有几个线轴。"
+    },
+    {
+      "id": "projector",
+      "model": "projector",
+      "slot": "作业间·工作台",
+      "state": "修到一半",
+      "label": "修到一半的幻灯机",
+      "note": "修到一半的幻灯机。镜头拆下来擦过了，灯座换了新的，还差一个小弹簧。旁边放着一盒玻璃幻灯片。"
+    },
+    {
+      "id": "toy-windup",
+      "model": "toy-windup",
+      "slot": "作业间·工作台",
+      "state": "停着",
+      "label": "旧发条小玩具",
+      "note": "一只铁皮发条小鸟，漆掉了一些，发条也松了，放在工作台上等着修。"
+    },
+    {
+      "id": "study-book",
+      "model": "book",
+      "slot": "书房·书桌",
+      "state": "摊开",
+      "label": "摊开的书",
+      "note": "书房矮桌上摊开的一本书。"
+    },
+    {
+      "id": "study-books",
+      "model": "book-stack",
+      "slot": "书房·书桌",
+      "state": "整齐",
+      "label": "一摞书",
+      "note": "书房矮桌上叠着的几本书。"
+    },
+    {
+      "id": "kite-frame",
+      "model": "kite",
+      "slot": "阳台·小桌",
+      "state": "只有骨架",
+      "label": "风筝骨架",
+      "note": "阳台上，风筝的竹骨架已经扎好了，线绑到一半。亚托莉说要等风大一点的日子，带去河堤上放。"
+    },
+    {
+      "id": "spools",
+      "model": "spools",
+      "slot": "阳台·小桌",
+      "state": "两个",
+      "label": "线轴",
+      "note": "缠着风筝线的线轴。"
+    },
+    {
+      "id": "laundry-towels",
+      "model": "laundry-towel",
+      "slot": "阳台·晾衣竿",
+      "state": "自动",
+      "label": "晾着的毛巾",
+      "note": "晾衣竿上搭着两条毛巾。"
+    },
+    {
+      "id": "whetstone",
+      "model": "whetstone",
+      "slot": "后院·磨刀凳",
+      "state": "湿的",
+      "label": "磨刀石",
+      "note": "后院的磨刀石。丛雨练完刀，就坐在这里用磨刀石保养丛雨丸的刀身：先浸水，再一下一下推，推完用布擦干。"
+    },
+    {
+      "id": "bucket-yard",
+      "model": "bucket",
+      "slot": "后院·地上",
+      "state": "盛着水",
+      "label": "木桶",
+      "note": "磨刀用的木桶，水是满的。"
+    },
+    {
+      "id": "lanterns-gate",
+      "model": "lanterns",
+      "slot": "大门·红提灯",
+      "state": "自动",
+      "label": "大门的红提灯",
+      "note": "大门门楼下挂的两盏红提灯。"
+    },
+    {
+      "id": "lanterns-front",
+      "model": "lanterns",
+      "slot": "前庭·石灯笼",
+      "state": "自动",
+      "label": "前庭的石灯笼",
+      "note": "前庭石板路两边的两座石灯笼。"
+    },
+    {
+      "id": "lanterns-yard",
+      "model": "lanterns",
+      "slot": "院子·石灯笼",
+      "state": "自动",
+      "label": "石灯笼",
+      "note": "院子里的石灯笼。傍晚亚托莉会把里面的蜡烛点上。"
+    }
+  ]
+}

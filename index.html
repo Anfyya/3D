@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>宿舍 · 穗织</title>
+<style>
+  :root {
+    --ink: #2b2420;
+    --paper: rgba(250, 244, 230, 0.94);
+    --accent: #b7472a;
+    --line: rgba(120, 90, 60, 0.35);
+    --serif: "Hiragino Mincho ProN", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; touch-action: none; background: #1b1a20; font-family: var(--serif); color: var(--ink); }
+  #c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; outline: none; }
+  .hidden { display: none !important; }
+
+  /* 标题 */
+  #title { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 20;
+    background: radial-gradient(ellipse at 50% 60%, rgba(30, 24, 30, 0.25), rgba(15, 12, 18, 0.72)); transition: opacity 0.8s; }
+  #title .card { text-align: center; color: #f8f1e4; padding: 32px 40px; max-width: 640px; }
+  #title h1 { font-size: 64px; letter-spacing: 0.4em; margin: 0 0 6px 0.4em; font-weight: 600; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.5); }
+  #title .sub { letter-spacing: 0.35em; font-size: 15px; opacity: 0.85; margin-bottom: 26px; }
+  #title .times { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 22px; }
+  .chip { border: 1px solid rgba(255, 240, 220, 0.5); color: #f8f1e4; background: rgba(255, 255, 255, 0.06); padding: 7px 16px; border-radius: 999px;
+    font-family: var(--serif); font-size: 14px; cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s; }
+  .chip:hover { background: rgba(255, 255, 255, 0.16); }
+  .chip.on { background: rgba(255, 236, 210, 0.92); color: #3a2a20; border-color: transparent; }
+  #enter { margin-top: 6px; font-family: var(--serif); font-size: 18px; letter-spacing: 0.5em; padding: 12px 34px 12px 44px; border: none; border-radius: 4px;
+    background: #f3e6cf; color: #3a2a20; cursor: pointer; box-shadow: 0 6px 30px rgba(0, 0, 0, 0.35); }
+  #enter:disabled { opacity: 0.5; cursor: wait; }
+  #title .keys { margin-top: 22px; font-size: 12.5px; line-height: 1.9; opacity: 0.78; letter-spacing: 0.06em; }
+  #title .keys b { display: inline-block; min-width: 22px; padding: 0 5px; margin: 0 2px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 3px; font-weight: normal; font-family: ui-monospace, monospace; font-size: 11.5px; }
+  #loading { margin-top: 14px; font-size: 12px; opacity: 0.7; letter-spacing: 0.15em; }
+
+  /* HUD */
+  #hud { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+  #cross { position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; margin: -2.5px; border-radius: 50%; background: rgba(255, 255, 255, 0.85); box-shadow: 0 0 4px rgba(0, 0, 0, 0.6); transition: transform 0.15s; }
+  #cross.hot { transform: scale(2.2); background: #ffe9c7; }
+  #prompt { position: absolute; left: 50%; top: calc(50% + 26px); transform: translateX(-50%); color: #fff; font-size: 14px; letter-spacing: 0.1em;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.5); white-space: nowrap; }
+  #prompt kbd { font-family: ui-monospace, monospace; font-size: 11px; border: 1px solid rgba(255, 255, 255, 0.7); border-radius: 3px; padding: 0 4px; margin-right: 6px; }
+
+  #place { position: absolute; left: 34px; top: 30px; color: #fff; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6); opacity: 0; transform: translateX(-10px); transition: all 0.7s; }
+  #place.show { opacity: 1; transform: none; }
+  #place .small { font-size: 12px; letter-spacing: 0.4em; opacity: 0.85; }
+  #place .big { font-size: 28px; letter-spacing: 0.25em; margin-top: 4px; }
+  #place .rule { width: 160px; height: 1px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), transparent); margin-top: 8px; }
+
+  #topright { position: absolute; right: 18px; top: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: auto; }
+  #timebar { display: flex; gap: 6px; }
+  #timebar .chip { font-size: 12.5px; padding: 5px 12px; background: rgba(20, 16, 20, 0.35); backdrop-filter: blur(4px); }
+  #timebar .chip.on { background: rgba(255, 236, 210, 0.92); }
+  #stat { font-size: 12.5px; color: #fff; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); letter-spacing: 0.08em; text-align: right; line-height: 1.7; }
+  #stat .ghost { color: #bfe9ff; }
+  #stat .warn { color: #ffd2a8; }
+  #summonBtn { font: inherit; font-size: 12.5px; padding: 5px 14px; cursor: pointer; background: rgba(20, 30, 32, 0.4); backdrop-filter: blur(4px); letter-spacing: 0.12em; }
+  #summonBtn.on { background: rgba(120, 230, 215, 0.85); color: #0f2a2a; border-color: transparent; box-shadow: 0 0 14px rgba(110, 240, 220, 0.6); }
+
+  /* 对话框（视觉小说风） */
+  #dialog { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); width: min(880px, calc(100% - 32px)); z-index: 15;
+    background: linear-gradient(180deg, rgba(255, 250, 240, 0.93), rgba(246, 236, 218, 0.95)); border-radius: 6px; padding: 26px 30px 22px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35); border: 1px solid rgba(160, 120, 80, 0.35); pointer-events: auto; cursor: pointer; }
+  #dialog .name { position: absolute; left: 22px; top: -16px; background: #6b3a2a; color: #fbefdc; padding: 5px 18px; font-size: 15px; letter-spacing: 0.15em; border-radius: 3px; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25); }
+  #dialog .text { font-size: 17px; line-height: 1.95; letter-spacing: 0.05em; min-height: 3.9em; }
+  #dialog .more { position: absolute; right: 18px; bottom: 10px; font-size: 12px; opacity: 0.55; animation: blink 1.4s infinite; }
+  @keyframes blink { 50% { opacity: 0.15; } }
+
+  #tip { position: fixed; z-index: 14; pointer-events: none; color: #fff; font-size: 13px; background: rgba(20,16,22,0.7); padding: 4px 10px; border-radius: 3px; opacity: 0; transition: opacity 0.15s; white-space: nowrap; }
+  #tip.show { opacity: 1; }
+  #lockhint { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 13; color: #fff; font-size: 13px; letter-spacing: 0.08em; background: rgba(20,16,22,0.55); padding: 6px 16px; border-radius: 999px; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  #lockhint.show { opacity: 1; }
+  #toast { position: fixed; left: 50%; top: 18%; transform: translateX(-50%); color: #fff; font-size: 14px; letter-spacing: 0.08em; background: rgba(20, 16, 22, 0.6);
+    padding: 8px 18px; border-radius: 4px; z-index: 12; opacity: 0; transition: opacity 0.4s; pointer-events: none; max-width: 80%; text-align: center; }
+  #toast.show { opacity: 1; }
+
+  /* 地点 / 痕迹面板 */
+  #menu { position: fixed; inset: 0; z-index: 18; display: flex; align-items: center; justify-content: center; background: rgba(15, 12, 18, 0.45); }
+  #menu .panel { background: var(--paper); border-radius: 8px; padding: 22px 26px; width: min(760px, calc(100% - 32px)); max-height: 82vh; overflow: auto; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4); }
+  #menu h2 { margin: 0 0 4px; font-size: 20px; letter-spacing: 0.25em; }
+  #menu .hint { font-size: 12px; opacity: 0.6; margin-bottom: 14px; }
+  #menu .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-bottom: 18px; }
+  #menu .grid button { font-family: var(--serif); text-align: left; background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 9px 12px; cursor: pointer; font-size: 14px; color: var(--ink); }
+  #menu .grid button:hover { background: #f8ecd8; }
+  #menu .grid button small { display: block; font-size: 11px; opacity: 0.55; margin-top: 2px; }
+  #menu .traces { columns: 2; column-gap: 24px; font-size: 13.5px; line-height: 1.9; }
+  #menu .traces div { break-inside: avoid; }
+  #menu .traces .no { opacity: 0.35; }
+  #menu h2.warn { color: #9a3a1e; margin-top: 18px; }
+  #menu .errs { font-size: 13px; line-height: 1.6; }
+  #menu .errs div { margin-bottom: 8px; padding: 6px 10px; background: rgba(200, 80, 40, 0.08); border-left: 3px solid #c0582c; border-radius: 2px; }
+  #menu .errs small { opacity: 0.7; }
+  #menu .close { float: right; font-family: var(--serif); border: none; background: none; font-size: 14px; cursor: pointer; opacity: 0.6; }
+  @media (max-width: 600px) { #title h1 { font-size: 44px; } #menu .traces { columns: 1; } #place { left: 16px; top: 16px; } }
+</style>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three/build/three.module.js", "three/addons/": "./vendor/three/examples/jsm/" } }
+</script>
+</head>
+<body>
+<canvas id="c" tabindex="0"></canvas>
+
+<div id="title">
+  <div class="card">
+    <h1>宿舍</h1>
+    <div class="sub">穗织 · 十月初 · 秋祭刚过</div>
+    <div style="font-size:14px;opacity:.85;letter-spacing:.12em;line-height:1.9">山道旁一户带院子的老宅子。<br>主人住在这里，丛雨和亚托莉陪着。</div>
+    <div class="times" id="titleTimes"></div>
+    <button id="enter" disabled>正在搭建……</button>
+    <div id="loading"></div>
+    <div class="keys">
+      进去以后<b>手指在触控板上轻轻滑动</b>就能转头（不用按下）　<b>Esc</b> 拿回鼠标　<b>[</b> <b>]</b> 调灵敏度<br>
+      <b>轻点</b> = 看准星对着的东西 / 开门 / 走到那里　<b>捏合</b> 放大（<b>Z</b> 复原）　两指滑动也能转头<br>
+      <b>W</b><b>S</b> / <b>↑</b><b>↓</b> 前后走　<b>A</b><b>D</b> 左右　<b>←</b><b>→</b> 转身　<b>Shift</b> 快走<br>
+      <b>E</b> 看看　<b>1</b>–<b>4</b> 时间段　<b>M</b> 地点与生活痕迹　<b>G</b> 召唤 / 送走藏经阁<br>
+      <b>F</b> 灵体模式（穿墙飘，<b>空格</b>上 <b>C</b>下）　<b>V</b> 声音　<b>I</b> 上下反转
+    </div>
+  </div>
+</div>
+
+<div id="hud" class="hidden">
+  <div id="cross"></div>
+  <div id="prompt"></div>
+  <div id="place"><div class="small">穗织 · 宿舍</div><div class="big"></div><div class="rule"></div></div>
+  <div id="topright">
+    <div id="timebar"></div>
+    <button id="summonBtn" class="chip" title="G">召唤藏经阁</button>
+    <div id="stat"></div>
+  </div>
+</div>
+<div id="toast"></div>
+<div id="tip"></div>
+<div id="lockhint"></div>
+<div id="dialog" class="hidden"><div class="name"></div><div class="text"></div><div class="more">▼</div></div>
+<div id="menu" class="hidden"><div class="panel"></div></div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
