@@ -24,10 +24,16 @@ import { TimeOfDay } from './world/timeofday.js';
 import { Player } from './player.js';
 import { UI } from './ui.js';
 import { Sound } from './audio.js';
+import { QUALITY, QUALITY_KEYS, initialQuality, saveQuality } from './quality.js';
 
 const canvas = document.getElementById('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
-const MAX_PR = Math.min(devicePixelRatio, +(new URLSearchParams(location.search).get('pr') || 1.25));
+// 画质档位（quality.js）。地址里写了 ?pr= / ?fps= 就以地址为准
+const URLP = new URLSearchParams(location.search);
+const prParam = +URLP.get('pr') || 0, fpsParam = +URLP.get('fps') || 0;
+let qKey = initialQuality(), Q = QUALITY[qKey];
+const prOf = (q) => Math.min(devicePixelRatio, prParam || q.pr);
+let MAX_PR = prOf(Q), MIN_PR = Math.min(MAX_PR, Q.minPR);
 renderer.setPixelRatio(MAX_PR);
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
@@ -62,13 +68,14 @@ async function build(ui) {
 
   const sun = new THREE.DirectionalLight('#fff', 3);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.mapSize.set(Q.shadow, Q.shadow);
   const S = 32;
   Object.assign(sun.shadow.camera, { left: -S, right: S, top: S, bottom: -S, near: 1, far: 220 });
   sun.shadow.bias = -0.0004;
   sun.shadow.normalBias = 0.03;
   sun.shadow.radius = 3;
   scene.add(sun, sun.target);
+  sunLight = sun;
   const hemi = new THREE.HemisphereLight('#bcd6f2', '#8c7a5c', 1);
   scene.add(hemi);
 
@@ -139,13 +146,15 @@ if (params.get('ao') !== '0') {
   gtao.setSceneClipBox(new THREE.Box3(new THREE.Vector3(-37, -6, -25), new THREE.Vector3(35, 26, 19)));
   // AO 用半分辨率算，省下一大半开销
   const setSize = gtao.setSize.bind(gtao);
-  gtao.setSize = (w, h) => setSize(Math.ceil(w / 2), Math.ceil(h / 2));
-  gtao.updateGtaoMaterial({ radius: 0.5, distanceExponent: 1.4, thickness: 1.2, scale: 1.0, samples: 8 });
+  gtao.setSize = (w, h) => setSize(Math.ceil(w * Q.aoScale), Math.ceil(h * Q.aoScale));
+  gtao.updateGtaoMaterial({ radius: 0.5, distanceExponent: 1.4, thickness: 1.2, scale: 1.0, samples: Q.aoSamples || 8 });
   gtao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 5, rings: 2, samples: 8 });
   gtao.blendIntensity = 0.85;
+  gtao.enabled = Q.ao;
   composer.addPass(gtao);
 }
 const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth / 2, innerHeight / 2), 0.2, 0.4, 0.9);
+bloom.enabled = Q.bloom;
 composer.addPass(bloom);
 composer.addPass(new OutputPass());
 const grade = new ShaderPass(GradeShader);
@@ -188,7 +197,31 @@ const places = [
   { name: '书房', x: -7, y: F2, z: 1.4, yaw: yawTo(0, 1) },
 ];
 
-const ui = new UI({ player, tod: null, camera, places, onEnter: enter });
+const ui = new UI({ player, tod: null, camera, places, onEnter: enter, quality: { keys: QUALITY_KEYS, labels: QUALITY_KEYS.map((k) => QUALITY[k].label), current: qKey, onChange: (k) => applyQuality(k) } });
+
+// 切换画质：分辨率、AO、泛光、影子、同时亮的灯数、帧率上限都跟着换（换灯数和影子大小时会顿一下）
+let sunLight = null;
+function applyQuality(key) {
+  if (!QUALITY[key]) return;
+  qKey = key; Q = QUALITY[key];
+  saveQuality(key);
+  MAX_PR = prOf(Q); MIN_PR = Math.min(MAX_PR, Q.minPR);
+  curPR = MAX_PR; lowRuns = highRuns = 0; lastPRChange = time;
+  renderer.setPixelRatio(curPR);
+  composer.setPixelRatio(curPR);
+  if (gtao) { gtao.enabled = Q.ao; gtao.updateGtaoMaterial({ samples: Q.aoSamples || 8 }); }
+  bloom.enabled = Q.bloom;
+  composer.setSize(innerWidth, innerHeight);
+  if (sunLight && sunLight.shadow.mapSize.x !== Q.shadow) {
+    sunLight.shadow.mapSize.set(Q.shadow, Q.shadow);
+    sunLight.shadow.map?.dispose();
+    sunLight.shadow.map = null;
+  }
+  renderer.shadowMap.needsUpdate = true;
+  lightPool?.setSize(Q.lights);
+  ui.setQuality(key);
+  ui.toast(`画质：${Q.label}`);
+}
 let tod, sound, built = false;
 
 function enter() {
@@ -223,7 +256,7 @@ addEventListener('mousemove', (e) => { if (!player.locked && !player.dragging) u
   ui.tod = tod;
   tod.onChange((k) => document.querySelectorAll('.chip[data-k]').forEach((b) => b.classList.toggle('on', b.dataset.k === k)));
   tod.set(startTime, true);
-  lightPool = new LightPool(scene, 8);
+  lightPool = new LightPool(scene, Q.lights);
   renderer.shadowMap.needsUpdate = true;
   // 先把所有着色器编译好，免得第一次转头时卡一下
   if (!document.hidden) await Promise.race([renderer.compileAsync(scene, camera).catch(() => {}), new Promise((r) => setTimeout(r, 4000))]);
@@ -243,9 +276,9 @@ addEventListener('mousemove', (e) => { if (!player.locked && !player.dragging) u
   if (params.has('auto')) enter();
 })();
 
-// ———— 帧率：最高 60（高刷屏也不跑 120），没在操作时降到 30，标题画面 20 ————
+// ———— 帧率：操作时按画质档位的上限（极致档不限），没在操作时降下来，标题画面 20 ————
 // 按显示器刷新的整数倍跳帧（120Hz 每 2 帧画一次、60Hz 每帧都画），节奏均匀，转头不会一顿一顿
-const FPS_CAP = Math.min(60, +(params.get('fps') || 60));
+const capOf = () => fpsParam || Q.fps || 1000;
 let lastInput = performance.now();
 const poke = () => { lastInput = performance.now(); };
 for (const ev of ['keydown', 'keyup', 'wheel', 'mousemove', 'mousedown', 'touchstart', 'touchmove', 'gesturechange']) addEventListener(ev, poke, { passive: true });
@@ -253,20 +286,21 @@ let busy = false;
 function targetFps() {
   if (!ui.started) return 20;
   busy = performance.now() - lastInput < 2000 || player.vel.lengthSq() > 0.01 || !!player.autoTarget || (tod && tod.t < 1);
-  return busy ? FPS_CAP : Math.min(FPS_CAP, 30);
+  return busy ? capOf() : Math.min(capOf(), Q.idle);
 }
 
 // ———— 自适应分辨率：持续掉帧才降，持续流畅很久才升，避免来回切造成的周期性卡顿 ————
 let prAcc = 0, prFrames = 0, curPR = MAX_PR, lowRuns = 0, highRuns = 0, lastPRChange = -100;
 function adaptResolution(dt, target) {
-  if (document.hidden || target < 50) { prAcc = 0; prFrames = 0; return; }
+  if (document.hidden || target < 50 || prParam) { prAcc = 0; prFrames = 0; return; }
   prAcc += dt; prFrames++;
   if (prAcc < 1.5) return;
   const fps = prFrames / prAcc;
   prAcc = 0; prFrames = 0;
-  if (fps < 40) { lowRuns++; highRuns = 0; } else if (fps > target - 4) { highRuns++; lowRuns = 0; } else { lowRuns = 0; highRuns = 0; }
+  const goal = Math.min(target, 60);
+  if (fps < goal * 0.67) { lowRuns++; highRuns = 0; } else if (fps > goal - 4) { highRuns++; lowRuns = 0; } else { lowRuns = 0; highRuns = 0; }
   let next = curPR;
-  if (lowRuns >= 2 && curPR > 0.75 && time - lastPRChange > 4) next = Math.max(0.75, curPR - 0.25);
+  if (lowRuns >= 2 && curPR > MIN_PR && time - lastPRChange > 4) next = Math.max(MIN_PR, curPR - 0.25);
   else if (highRuns >= 6 && curPR < MAX_PR && time - lastPRChange > 12) next = Math.min(MAX_PR, curPR + 0.25);
   if (next !== curPR) {
     curPR = next; lastPRChange = time; lowRuns = highRuns = 0;
@@ -309,6 +343,7 @@ function loop(now) {
   }
   wasBusy = busy;
   adaptResolution(dt, target);
+  perfMeter(now);
   // 让场景每帧都画进带深度贴图的那张渲染目标
   composer.readBuffer = composer.renderTarget2;
   composer.writeBuffer = composer.renderTarget1;
@@ -316,4 +351,17 @@ function loop(now) {
 }
 requestAnimationFrame(loop);
 
-window.__dorm = { scene, camera, renderer, player, world, get tod() { return tod; }, get lightPool() { return lightPool; }, places, composer, gtao, bloom, ui };
+// ———— 右上角：实际帧率、渲染分辨率 ————
+let pmFrames = 0, pmLast = 0;
+const pmSize = new THREE.Vector2();
+function perfMeter(now) {
+  pmFrames++;
+  if (!pmLast) pmLast = now;
+  if (now - pmLast < 500) return;
+  const fps = Math.round(pmFrames * 1000 / (now - pmLast));
+  pmFrames = 0; pmLast = now;
+  renderer.getDrawingBufferSize(pmSize);
+  ui.perf(`${fps} fps · ${pmSize.x}×${pmSize.y}${busy ? '' : ' · 静止省电'}`, `渲染倍数 ${curPR}（这个档位最高 ${MAX_PR}，掉帧时最低降到 ${MIN_PR}）`);
+}
+
+window.__dorm = { scene, camera, renderer, player, world, get tod() { return tod; }, get lightPool() { return lightPool; }, places, composer, gtao, bloom, ui, applyQuality };

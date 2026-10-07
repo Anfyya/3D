@@ -14,13 +14,25 @@ export class LightPool {
       l.parent.remove(l);
       return { l, p, w: 0, slot: null, score: 0, leaving: false };
     });
+    this.scene = scene;
     this.slots = [];
-    for (let i = 0; i < k; i++) {
+    this.setSize(k);
+    this.ranked = [];
+  }
+
+  // 换真灯数（画质档位）：灯数变了着色器要重编译一次
+  setSize(k) {
+    while (this.slots.length > k) {
+      const s = this.slots.pop();
+      if (s.v) { s.v.slot = null; s.v.w = 0; }
+      this.scene.remove(s.r);
+      s.r.dispose();
+    }
+    while (this.slots.length < k) {
       const r = new THREE.PointLight('#ffffff', 0, 10, 2);
-      scene.add(r);
+      this.scene.add(r);
       this.slots.push({ r, v: null });
     }
-    this.ranked = [];
   }
 
   update(dt, cam) {

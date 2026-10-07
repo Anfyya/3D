@@ -6,8 +6,8 @@ const $ = (s) => document.querySelector(s);
 const TIME_KEYS = ['dawn', 'day', 'dusk', 'night'];
 
 export class UI {
-  constructor({ player, tod, camera, places, onEnter }) {
-    Object.assign(this, { player, tod, camera, places });
+  constructor({ player, tod, camera, places, onEnter, quality }) {
+    Object.assign(this, { player, tod, camera, places, quality });
     this.found = new Set(JSON.parse(safeGet('dorm.found') || '[]'));
     this.dialogOpen = false;
     this.menuOpen = false;
@@ -35,6 +35,19 @@ export class UI {
     };
     mkChips($('#titleTimes'));
     mkChips($('#timebar'));
+    // 画质按钮（标题画面和右上角各一组）
+    for (const el of [$('#titleQuality'), $('#qbar')]) {
+      quality.keys.forEach((k, i) => {
+        const b = document.createElement('button');
+        b.className = 'chip q';
+        b.dataset.q = k;
+        b.textContent = quality.labels[i];
+        b.title = 'P 切换画质';
+        b.onclick = (e) => { e.stopPropagation(); e.currentTarget.blur(); quality.onChange(k); };
+        el.appendChild(b);
+      });
+    }
+    this.setQuality(quality.current);
 
     $('#enter').onclick = () => onEnter();
     $('#summonBtn').onclick = (e) => { e.currentTarget.blur(); this.summon(); };
@@ -48,6 +61,7 @@ export class UI {
       else if (e.code === 'Escape') { if (this.dialogOpen) this.closeDialog(); if (this.menuOpen) this.toggleMenu(false); }
       else if (e.code === 'KeyM' || e.code === 'Tab') { e.preventDefault(); this.toggleMenu(); }
       else if (e.code === 'KeyG') this.summon();
+      else if (e.code === 'KeyP') { const ks = this.quality.keys; this.quality.onChange(ks[(ks.indexOf(this.qKey) + 1) % ks.length]); }
       else if (e.code === 'KeyF') { this.player.ghost = !this.player.ghost; this.toast(this.player.ghost ? '灵体模式：飘起来了，可以穿墙（空格上升，C 下降）' : '回到地面'); this.updateStat(); }
       else if (/^Digit[1-4]$/.test(e.code)) this.setTime(TIME_KEYS[+e.code.slice(5) - 1]);
     });
@@ -63,6 +77,18 @@ export class UI {
     const b = $('#summonBtn');
     b.classList.toggle('on', z.on);
     b.textContent = z.on ? '送走藏经阁' : '召唤藏经阁';
+  }
+
+  setQuality(k) {
+    this.qKey = k;
+    document.querySelectorAll('.chip[data-q]').forEach((b) => b.classList.toggle('on', b.dataset.q === k));
+  }
+
+  // 右上角的帧率和分辨率
+  perf(text, tip) {
+    const el = $('#perf');
+    if (el.textContent !== text) el.textContent = text;
+    el.title = tip;
   }
 
   setTime(k) {
